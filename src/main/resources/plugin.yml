@@ -1,0 +1,5 @@
+name: TimerPro
+version: '${project.version}'
+author: qpneruy
+main: me.qpneruy.timerplugin.TimerPro
+api-version: '1.18'
