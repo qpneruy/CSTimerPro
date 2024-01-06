@@ -24,7 +24,7 @@ public final class TimerPro extends JavaPlugin {
 //        scheduler.scheduleSyncDelayedTask(this, new Runnable() {
 //            @Override
 //            public void run() {
-//                // Bắt đầu vòng lặp sự kiện sau khi đợi đến phút mới
+//                // Bắt đầu vòng lặp s kiện sau khi đợi đến phút mới
 //                BukkitRunnable task = new YourTask(YourPlugin.this);
 //                task.runTaskTimer(YourPlugin.this, 0L, 100L);
 //            }
