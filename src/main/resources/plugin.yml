@@ -1,15 +1,11 @@
 name: TimerPro
 version: '${project.version}'
-author: qpneruy
+author: Tinhde061
 main: me.qpneruy.timerplugin.TimerPro
 api-version: '1.18'
 commands:
-  taskcancel:
-    description: "task start"
-    usage: <command>
-  StartSave:
-    description: "task start"
-    usage: <command>
-  add_Time:
-    description: "add new time"
-    usage: <command>
+  Sync_Time:
+    description: "Đồng bộ thời gian thật"
+  Add_Time:
+    description: "Thêm giờ"
+    usage: <command> <hh:mm> <mob_id>
