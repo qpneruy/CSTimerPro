@@ -3,3 +3,7 @@ version: '${project.version}'
 author: qpneruy
 main: me.qpneruy.timerplugin.TimerPro
 api-version: '1.18'
+commands:
+  taskcancel:
+    description: "Huy task"
+    usage: <command>
