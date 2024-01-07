@@ -1,21 +1,14 @@
 package me.qpneruy.timerplugin;
 
-import com.google.common.collect.Lists;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.NotNull;
-
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Collection;
-
 import static org.apache.logging.log4j.LogManager.getLogger;
-import static org.bukkit.Bukkit.getConsoleSender;
 import static org.bukkit.Bukkit.getServer;
 
 public class task extends BukkitRunnable {
@@ -28,6 +21,10 @@ public class task extends BukkitRunnable {
     @Override
     public void run(){
         Collection<? extends Player> players = Bukkit.getOnlinePlayers();
+        json JsonWritter = new json();
+        JsonWritter.getTimeDataList();
+
+
         for (Player items : players){
             Player player = items.getPlayer();
             Location location = player.getLocation();
@@ -35,6 +32,7 @@ public class task extends BukkitRunnable {
         }
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("hh:mm:ss");
+
         LocalTime localTime = LocalTime.now();
         String currentTime = dtf.format(localTime);
         System.out.println(currentTime);

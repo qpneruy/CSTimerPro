@@ -5,5 +5,11 @@ main: me.qpneruy.timerplugin.TimerPro
 api-version: '1.18'
 commands:
   taskcancel:
-    description: "Huy task"
+    description: "task start"
+    usage: <command>
+  StartSave:
+    description: "task start"
+    usage: <command>
+  add_Time:
+    description: "add new time"
     usage: <command>

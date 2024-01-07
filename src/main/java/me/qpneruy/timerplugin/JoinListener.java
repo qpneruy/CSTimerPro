@@ -18,7 +18,7 @@ public class JoinListener implements Listener {
         String Player_n = player.getName();
         if (joinmes != null) {
             joinmes = joinmes.replace("%player%", Player_n);
-            event.getPlayer().sendMessage("alo" + joinmes);
+            event.getPlayer().sendMessage(joinmes);
         }
     }
 }

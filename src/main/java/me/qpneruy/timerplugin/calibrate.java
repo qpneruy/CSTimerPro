@@ -1,21 +1,22 @@
 package me.qpneruy.timerplugin;
 
-import net.kyori.adventure.text.TextComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.Server;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.world.TimeSkipEvent;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-public class calibrate implements Listener {
+public class calibrate implements CommandExecutor {
     private final TimerPro plugin;
 
     public calibrate(TimerPro plugin) {
         this.plugin = plugin;
     }
-    public void calibrate_task(){
 
+    @Override
+    public boolean onCommand(CommandSender Sender, Command command, String label, String[] Args) {
+        if (Sender instanceof Player) {
+            json Json = new json();
+        }
+        return false;
     }
 }
