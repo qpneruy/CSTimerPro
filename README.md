@@ -1,3 +1,4 @@
+** licensed
 TimerPlugin is licensed under the terms of Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International ("CC-BY-NC-SA-4.0"). Commercial use is not allowed under this license. This includes any kind of revenue made with or based upon the software, even donations.
 
 The CC-BY-NC-SA-4.0 allows you to:
