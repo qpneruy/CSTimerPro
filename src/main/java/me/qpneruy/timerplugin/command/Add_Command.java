@@ -1,0 +1,51 @@
+package me.qpneruy.timerplugin.command;
+
+import me.qpneruy.timerplugin.TimerPro;
+import me.qpneruy.timerplugin.task.archive;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Add_Command implements CommandExecutor {
+    private final TimerPro plugin;
+    private static final Logger logger = Logger.getLogger(archive.class.getName());
+
+    public Add_Command(TimerPro plugin) {
+        this.plugin = plugin;
+    }
+    private static final String TIME_24H_REGEX = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
+
+    public static boolean isValidTime24H(String time) {
+        Pattern pattern = Pattern.compile(TIME_24H_REGEX);
+        Matcher matcher = pattern.matcher(time);
+        return matcher.matches();
+    }
+
+    @Override
+    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, String[] strings) {
+        Player player = (Player) commandSender;
+        if (strings.length == 0) {
+                player.sendMessage("§6[TimerPro]: §cTruyền tham số vào đê!");
+                return false;
+        } else {
+            if (isValidTime24H(strings[0]) && strings.length > 1) {
+                archive JsonWritter = new archive();
+                StringBuilder full_command = new StringBuilder(strings[1]);
+                for (int i = 2; i < strings.length; i++) {
+                    full_command.append(" ").append(strings[i]);
+                }
+                JsonWritter.addTimeData(strings[0], full_command.toString());
+            } else {
+                player.sendMessage("§6[TimerPro]: §cTham số không hợp lệ !");
+                player.sendMessage("§6[TimerPro]: Dùng: <Command> <Time 24H> <excec_command>");
+            }
+        }
+        return false;
+    }
+}

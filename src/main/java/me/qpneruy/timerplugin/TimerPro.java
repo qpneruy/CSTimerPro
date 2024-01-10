@@ -1,15 +1,14 @@
 package me.qpneruy.timerplugin;
+import me.qpneruy.timerplugin.command.*;
+import me.qpneruy.timerplugin.placeholder.Expansion;
+import me.qpneruy.timerplugin.task.command_task;
+
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
-
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 
 public final class TimerPro extends JavaPlugin {
-    public int scheduledTask;
     private static TimerPro plugin;
     public static TimerPro getPlugin() {
         return plugin;
@@ -18,35 +17,36 @@ public final class TimerPro extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
-        saveDefaultConfig();
         getLogger().info("-------------------------------");
-        getLogger().info("||     Đã khởi động Plugin   ||");
-        getLogger().info("-------------------------------");
-        getServer().getPluginManager().registerEvents(new JoinListener(this), this);
-//        getServer().getPluginManager().registerEvents(new calibrate(this), this);
-        Boss_Task();
-        Objects.requireNonNull(getCommand("Sync_Time")).setExecutor(new calibrate(this));
-        Objects.requireNonNull(getCommand("Add_Time")).setExecutor(new time_add(this));
-        Objects.requireNonNull(getCommand("Add_Time")).setTabCompleter(new auto_complete());
+        getLogger().info("||     Đã khởi động Plugin   ||___________________________");
+        getLogger().info("|| Make by: Supercalifragilisticexpialidocious configer ||");
+        getLogger().info("----------------------------------------------------------");
+        this.loadCommand();
+        this.loadTabcompleter();
+        new Expansion().register();
+        this.registerTask();
     }
-    public void Boss_Task(){
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("ss");
-        LocalTime localTime = LocalTime.now();
-        String currentTime = dtf.format(localTime);
-        int secondsUntilNextMinute = 60 - Integer.parseInt(currentTime);
-        scheduledTask = getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-            @Override
-            public void run() {
-                BukkitRunnable Task = new task(TimerPro.this);
-                Task.runTaskTimer(TimerPro.this, 0L, 1200L);
-            }
-        }, secondsUntilNextMinute * 20L);
-    }
+
     @Override
     public void onDisable() {
         // Plugin shutdown logic
         getLogger().info("-------------------------------");
         getLogger().info("||       Đã dừng PLugin      ||");
         getLogger().info("-------------------------------");
+    }
+    private void loadCommand() {
+        Objects.requireNonNull(getCommand("Sync_Time")).setExecutor(new Sync_Time(this));
+        Objects.requireNonNull(getCommand("Xem_Lenh")).setExecutor(new fecth_command());
+        Objects.requireNonNull(getCommand("Them_Lenh")).setExecutor(new Add_Command(this));
+        Objects.requireNonNull(getCommand("Doi_DuLieu")).setExecutor(new change_data());
+        Objects.requireNonNull(getCommand("freload")).setExecutor(new reload_omp());
+    }
+    private void loadTabcompleter() {
+        Objects.requireNonNull(getCommand("Them_lenh")).setTabCompleter(new Add_command_cmp());
+        Objects.requireNonNull(getCommand("Doi_DuLieu")).setTabCompleter(new change_data_cmp());
+    }
+    private void registerTask() {
+       command_task task = new command_task(this);
+       task.Run_Task();
     }
 }

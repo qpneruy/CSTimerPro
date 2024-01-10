@@ -3,9 +3,34 @@ version: '${project.version}'
 author: Tinhde061
 main: me.qpneruy.timerplugin.TimerPro
 api-version: '1.18'
+description: Plugin đặt thời để thực thi gian cho lệnh.
+depend: [PlaceholderAPI]
 commands:
   Sync_Time:
-    description: "Đồng bộ thời gian thật"
-  Add_Time:
-    description: "Thêm giờ"
-    usage: <command> <hh:mm> <mob_id>
+    description: "Đồng bộ thời gian thật!."
+    permission: TimerPro.Sync_Time
+  Them_Lenh:
+    description: "Thêm giờ thực thi lệnh!."
+    permission: TimerPro.Them_Lenh
+  Xem_Lenh:
+    description: "Hiện tất cả lệnh đã được thêm."
+    permission: TimerPro.Xem_Lenh
+  Doi_DuLieu:
+    description: "Thay đỗi dữ liệu tệp json :v."
+    permission: TimerPro.Doi_DuLieu
+  freload:
+    description: "hot reload :)"
+
+permissions:
+  TimerPro.Sync_Time:
+    description: Quyền sử dụng lệnh Sync_Time
+    default: op
+  TimerPro.Them_Lenh:
+    description: Quyền sử dụng Them_Lenh
+    default: op
+  TimerPro.Xem_Lenh:
+    description: Quyền sử dụng lệnh Xem_Lenh
+    default: op
+  TimerPro.Doi_DuLieu:
+    description: Quyền sử dụng lệnh Doi_DuLieu
+    default: op
