@@ -24,17 +24,19 @@ public class change_data_cmp implements TabCompleter {
         }
         return completions;
     }
+
     private List<String> getId() {
         List<String> id = new ArrayList<>();
         archive getCommand = new archive();
         List<TimeData> commandp = getCommand.getTimeDataList();
         int total_command = commandp.size();
-        for (int i = 1; i<=total_command; i++){
+        for (int i = 1; i <= total_command; i++) {
             id.add(Integer.toString(i));
         }
         return id;
     }
-    private List<String> getSuggest(){
+
+    private List<String> getSuggest() {
         List<String> suggests = new ArrayList<>();
         suggests.add("time");
         suggests.add("command");

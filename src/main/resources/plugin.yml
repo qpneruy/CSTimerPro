@@ -12,6 +12,9 @@ commands:
   Them_Lenh:
     description: "Thêm giờ thực thi lệnh!."
     permission: TimerPro.Them_Lenh
+  Xoa_Lenh:
+    description: "Xóa giờ thực thi lệnh!."
+    permission: TimerPro.Xoa_Lenh
   Xem_Lenh:
     description: "Hiện tất cả lệnh đã được thêm."
     permission: TimerPro.Xem_Lenh
@@ -20,6 +23,7 @@ commands:
     permission: TimerPro.Doi_DuLieu
   freload:
     description: "hot reload :)"
+    permission: TimerPro.freload
 
 permissions:
   TimerPro.Sync_Time:
@@ -33,4 +37,7 @@ permissions:
     default: op
   TimerPro.Doi_DuLieu:
     description: Quyền sử dụng lệnh Doi_DuLieu
+    default: op
+  TimerPro.freload:
+    description: Quyền sử dụng lệnh freload
     default: op

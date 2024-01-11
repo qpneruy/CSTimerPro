@@ -14,19 +14,24 @@ public class fecth_command implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if (commandSender instanceof Player) {
-           Player player = (Player) commandSender;
-            archive JsonReader = new archive();
-            List<TimeData> Command_data = JsonReader.getTimeDataList();
-            int Count = 0;
+        Player player = (Player) commandSender;
+        if (!player.hasPermission("TimerPro.Xem_Lenh")) {
+            player.sendMessage("§6[TimerPro]: §cBạn không có quyền sử dụng lệnh này!");
+        }
+        archive JsonReader = new archive();
+        List<TimeData> Command_data = JsonReader.getTimeDataList();
+        int Count = 0;
+        System.out.println(Command_data.isEmpty());
+        if (!Command_data.isEmpty()) {
             player.sendMessage("------------------§b[Danh Sách Lệnh]§f--------------------");
             for (TimeData commandp : Command_data) {
                 Count++;
-                player.sendMessage("§e" + Count + ". §6Thời Gian: §f" +  commandp.getTime());
+                player.sendMessage("§e" + Count + ". §6Thời Gian: §f" + commandp.getTime());
                 player.sendMessage("§e└->§f /" + commandp.getCommand());
             }
             player.sendMessage("------------------------§b[Hết]§f-------------------------");
-        }
+        } else player.sendMessage("§6[TimerPro]: §fKhông có lệnh nào được thêm!");
+
         return true;
     }
 }

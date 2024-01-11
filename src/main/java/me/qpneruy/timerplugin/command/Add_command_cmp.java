@@ -15,11 +15,12 @@ public class Add_command_cmp implements TabCompleter {
         List<String> completions = new ArrayList<>();
         if (command.getName().equalsIgnoreCase("Them_lenh")) {
             if (strings.length == 1) {
-              completions.addAll(getTime());
+                completions.addAll(getTime());
             }
         }
         return completions;
     }
+
     private List<String> getTime() {
         List<String> times = new ArrayList<>();
         times.add("06:00");
