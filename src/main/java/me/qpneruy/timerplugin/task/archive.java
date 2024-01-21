@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import me.qpneruy.timerplugin.TimerPro;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.*;
@@ -12,70 +14,91 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.apache.logging.log4j.LogManager.getLogger;
-
 public class archive {
     private static final Logger logger = Logger.getLogger(archive.class.getName());
-    private List<TimeData> timeDataList = new ArrayList<>();
-    private final String filePath_Command;
+    private Map<String, List<TimeData>> timerData = new HashMap<>();
+    public final String jsonPath;
 
     public archive() {
-        this.filePath_Command = TimerPro.getPlugin().getDataFolder().getAbsolutePath() + "/command_data.json";
-        File fileA = new File(filePath_Command);
-        File_Check(fileA);
-        loadFromFile(filePath_Command);
+        this.jsonPath = TimerPro.getPlugin().getDataFolder().getAbsolutePath() + "/command_data.json";
+        File fileA = new File(jsonPath);
+        fileCheck(fileA);
+        LoadData();
+    }
+    private static Map<String, List<TimeData>> defaultData() {
+        Map<String, List<TimeData>> scheduleMap = new HashMap<>();
+        scheduleMap.put("Everyday", new ArrayList<>());
+        scheduleMap.put("Sunday", new ArrayList<>());
+        scheduleMap.put("Monday", new ArrayList<>());
+        scheduleMap.put("Tuesday", new ArrayList<>());
+        scheduleMap.put("Wednesday", new ArrayList<>());
+        scheduleMap.put("Thursday", new ArrayList<>());
+        scheduleMap.put("Friday", new ArrayList<>());
+        scheduleMap.put("Saturday", new ArrayList<>());
+        return scheduleMap;
     }
 
-    private void File_Check(File file) {
+    private void fileCheck(File file) {
         try {
-          if (!file.exists()) {
-              if (file.createNewFile()) {
-              getLogger().info("Đấm nhau không?");
-              }
-          }
+            if (!file.exists()) {
+                if (file.createNewFile()) {
+                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                    String json = gson.toJson(defaultData());
+                    try (FileWriter writer = new FileWriter(jsonPath)) {
+                        writer.write(json);
+                        logger.log(Level.WARNING, "No command_data file exists, created a new one");
+                    } catch (IOException e) {
+                        logger.log(Level.SEVERE, "Error writing to command_data file", e);
+                    }
+                    logger.info("Đấm nhau không?");
+                }
+            }
         } catch (IOException e) {
-        logger.log(Level.SEVERE, "Xảy ra lỗi khi tạo mới tệp", e);
+            logger.log(Level.SEVERE, "Error creating new file", e);
         }
     }
-
-    public void addTimeData(String time, String name) {
-        TimeData timeData = new TimeData(time, name);
-        timeDataList.add(timeData);
-        saveToFile();
+    public void AddCommand(String DayOfWeek, String time, String Command) {
+        TimeData TimeData = new TimeData(time, Command);
+        List<TimeData> DayTimeData = this.timerData.get(DayOfWeek);
+        DayTimeData.add(TimeData);
+        SaveData();
     }
-    public void removeTimeData(int index) {
-        this.timeDataList.remove(index);
-        saveToFile();
-    }
-
-    public List<TimeData> getTimeDataList() {
-        return timeDataList;
-    }
-    public void setTimdataList(int index, TimeData data) {
-        timeDataList.set(index ,data);
-        saveToFile();
+    public void RemoveCommand(String DayOfWeek, int index) {
+        List<TimeData> DayTimeData = this.timerData.get(DayOfWeek);
+        DayTimeData.remove(index);
+        SaveData();
     }
 
-    private void loadFromFile(String file_path) {
-        try (FileReader reader = new FileReader(file_path)) {
+    public List<TimeData> getDayTimeList(String DayOfWeek) {
+        return this.timerData.get(DayOfWeek);
+    }
+    public void setDayTimeData(String DayOfWeek, int index, TimeData TimeData) {
+        List<TimeData> DayTimeData = this.timerData.get(DayOfWeek);
+        DayTimeData.set(index, TimeData);
+        SaveData();
+    }
+
+    public void LoadData() {
+        try (FileReader reader = new FileReader(jsonPath)) {
             Gson gson = new Gson();
-            Type timeDataType = TypeToken.getParameterized(List.class, TimeData.class).getType();
-            List<TimeData> loadedTimeDataList = gson.fromJson(reader, timeDataType);
-            timeDataList = loadedTimeDataList != null ? loadedTimeDataList : new ArrayList<>();
+            Type type = new TypeToken<Map<String, List<TimeData>>>() {}.getType();
+            this.timerData = gson.fromJson(reader, type);
+        } catch (FileNotFoundException e) {
+            logger.log(Level.SEVERE, "File not found", e);
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Xảy ra lỗi khi đọc tệp: ", e);
+            logger.log(Level.SEVERE, "Error reading file", e);
+        } catch (com.google.gson.JsonSyntaxException e) {
+            logger.log(Level.SEVERE, "Error parsing JSON syntax", e);
         }
     }
 
-    public void saveToFile() {
-        try (FileWriter writer = new FileWriter(filePath_Command)) {
+    public void SaveData() {
+        try (FileWriter writer = new FileWriter(jsonPath)) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String json = gson.toJson(timeDataList);
+            String json = gson.toJson(timerData);
             writer.write(json);
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Xảy ra Lỗi khi Luư tệp: ", e);
+            logger.log(Level.SEVERE, "Error while save data: ", e);
         }
     }
 }
-
-

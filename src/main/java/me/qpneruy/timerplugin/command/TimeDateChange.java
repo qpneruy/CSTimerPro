@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Objects;
 
-public class change_data implements CommandExecutor {
+public class TimeDateChange implements CommandExecutor {
 
 
     @Override
@@ -21,20 +21,20 @@ public class change_data implements CommandExecutor {
         if (!player.hasPermission("TimerPro.Doi_DuLieu")) {
             player.sendMessage("§6[TimerPro]: §cBạn không có quyền sử dụng lệnh này!");
         }
-        List<TimeData> Command_data = setData.getTimeDataList();
-        int index = Integer.parseInt(strings[0]) - 1;
-        if (index < 0 || index > strings.length) {
-            player.sendMessage("§6[TimerPro]: §fKhông tồn tại lệnh này !");
+        List<TimeData> commandData = setData.getDayTimeList(strings[0]);
+        int index = Integer.parseInt(strings[1]) - 1;
+        if (index < 0 || index > commandData.size()) {
+            player.sendMessage("§6[TimerPro]: §fKhông tồn tại dữ liệu này!");
             return false;
         }
-        TimeData data = Command_data.get(index);
-        if (strings[1].equals("time")) {
+        TimeData data = commandData.get(index);
+        if (strings[2].equals("time")) {
             player.sendMessage("§6[TimerPro]: §fĐã thay đổi thời gian.");
             player.sendMessage("§6[TimerPro]: §f└->  §c" + data.getTime() + " §f-> §a" + strings[2]);
-            data.setTime(strings[2]);
-        } else if (strings[1].equals("command")) {
+            data.setTime(strings[3]);
+        } else if (strings[2].equals("command")) {
             StringBuilder full_command = new StringBuilder(strings[2]);
-            for (int i = 3; i < strings.length; i++) {
+            for (int i = 4; i < strings.length; i++) {
                 full_command.append(" ").append(strings[i]);
             }
             if (Objects.equals(data.getCommand(), full_command.toString())) {
@@ -47,7 +47,7 @@ public class change_data implements CommandExecutor {
             }
         }
 
-        setData.setTimdataList(Integer.parseInt(strings[0]) - 1, data);
+        setData.setDayTimeData(strings[0], Integer.parseInt(strings[0]) - 1, data);
         return false;
     }
 }

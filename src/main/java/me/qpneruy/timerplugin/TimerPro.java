@@ -3,12 +3,11 @@ package me.qpneruy.timerplugin;
 import me.qpneruy.timerplugin.command.*;
 import me.qpneruy.timerplugin.placeholder.Expansion;
 import me.qpneruy.timerplugin.task.archive;
-import me.qpneruy.timerplugin.task.command_task;
+import me.qpneruy.timerplugin.task.Timer_Task;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
 import java.util.Objects;
+import java.util.TimerTask;
 import java.util.logging.Logger;
 
 
@@ -17,11 +16,11 @@ public final class TimerPro extends JavaPlugin {
     public static TimerPro getPlugin() {
         return plugin;
     }
-    private static final Logger logger = Logger.getLogger(archive.class.getName());
 
     @Override
     public void onEnable() {
         plugin = this;
+
         getConfig().options().copyDefaults();
         saveDefaultConfig();
         boolean tinhDepTrai = getConfig().getBoolean("TinhDepTrai", true);
@@ -49,19 +48,20 @@ public final class TimerPro extends JavaPlugin {
         getLogger().info("-------------------------------");
     }
     private void loadCommand() {
-        Objects.requireNonNull(getCommand("Sync_Time")).setExecutor(new Sync_Time(this));
-        Objects.requireNonNull(getCommand("Xem_Lenh")).setExecutor(new fecth_command());
+//        Objects.requireNonNull(getCommand("Sync_Time")).setExecutor(new Sync_Time(this));
+//        Objects.requireNonNull(getCommand("Xem_Lenh")).setExecutor(new fecth_command());
         Objects.requireNonNull(getCommand("Them_Lenh")).setExecutor(new Add_Command());
-        Objects.requireNonNull(getCommand("Doi_DuLieu")).setExecutor(new change_data());
-        Objects.requireNonNull(getCommand("freload")).setExecutor(new reload_omp());
-        Objects.requireNonNull(getCommand("Xoa_Lenh")).setExecutor(new Del_Command());
+        Objects.requireNonNull(getCommand("Doi_DuLieu")).setExecutor(new TimeDateChange());
+//        Objects.requireNonNull(getCommand("freload")).setExecutor(new reload_omp());
+//        Objects.requireNonNull(getCommand("Xoa_Lenh")).setExecutor(new Del_Command());
     }
     private void loadTabcompleter() {
         Objects.requireNonNull(getCommand("Them_lenh")).setTabCompleter(new Add_command_cmp());
-        Objects.requireNonNull(getCommand("Doi_DuLieu")).setTabCompleter(new change_data_cmp());
+//        Objects.requireNonNull(getCommand("Doi_DuLieu")).setTabCompleter(new change_data_cmp());
     }
     private void registerTask() {
-       command_task task = new command_task(this);
-       task.Run_Task();
+        Timer_Task task = new Timer_Task(this);
+        task.Run_Task();
     }
+
 }

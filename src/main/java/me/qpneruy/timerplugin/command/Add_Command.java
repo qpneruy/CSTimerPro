@@ -30,13 +30,14 @@ public class Add_Command implements CommandExecutor {
             player.sendMessage("§6[TimerPro]: §cTruyền tham số vào đê!");
             return false;
         } else {
-            if (isValidTime24H(strings[0]) && strings.length > 1) {
+            if (isValidTime24H(strings[1]) && strings.length > 2) {
                 archive JsonWritter = new archive();
-                StringBuilder full_command = new StringBuilder(strings[1]);
-                for (int i = 2; i < strings.length; i++) {
+                StringBuilder full_command = new StringBuilder(strings[2]);
+                for (int i = 3; i < strings.length; i++) {
                     full_command.append(" ").append(strings[i]);
                 }
-                JsonWritter.addTimeData(strings[0], full_command.toString());
+                System.out.println(strings[0] + ' ' + strings[1] + ' ' + full_command.toString());
+                JsonWritter.AddCommand(strings[0], strings[1], full_command.toString());
                 player.sendMessage("§6[TimerPro]: §fĐã thêm lệnh Thành công!");
             } else {
                 player.sendMessage("§6[TimerPro]: §cTham số không hợp lệ !");
