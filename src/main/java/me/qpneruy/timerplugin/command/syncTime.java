@@ -1,7 +1,7 @@
 package me.qpneruy.timerplugin.command;
 
 import me.qpneruy.timerplugin.TimerPro;
-import me.qpneruy.timerplugin.task.Timer_Task;
+import me.qpneruy.timerplugin.task.timerTask;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,10 +12,10 @@ import org.jetbrains.annotations.NotNull;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-public class Sync_Time implements CommandExecutor {
+public class syncTime implements CommandExecutor {
     private final TimerPro plugin;
 
-    public Sync_Time(TimerPro plugin) {
+    public syncTime(TimerPro plugin) {
         this.plugin = plugin;
     }
 
@@ -25,7 +25,7 @@ public class Sync_Time implements CommandExecutor {
         if (!player.hasPermission("TimerPro.Sync_Time")) {
             player.sendMessage("§6[TimerPro]: §cBạn không có quyền sử dụng lệnh này!");
         }
-        Timer_Task task = new Timer_Task(this.plugin);
+        timerTask task = new timerTask(this.plugin);
         Bukkit.getScheduler().cancelTasks(this.plugin);
         task.Run_Task();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");

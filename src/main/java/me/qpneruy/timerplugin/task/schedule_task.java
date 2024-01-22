@@ -17,9 +17,9 @@ import java.util.logging.Logger;
 import static org.bukkit.Bukkit.getServer;
 
 public class schedule_task extends BukkitRunnable {
-    private static final Logger logger = Logger.getLogger(archive.class.getName());
+
     private final TimerPro plugin;
-    private final Timer_Task task;
+    private final timerTask task;
     private final archive JsonWritter = new archive();
     private final World world = getServer().getWorlds().get(0);
     private final DateTimeZone zone = DateTimeZone.forID("Asia/Ho_Chi_Minh");
@@ -29,7 +29,7 @@ public class schedule_task extends BukkitRunnable {
 
     public schedule_task(TimerPro plugin) {
         this.plugin = plugin;
-        this.task = new Timer_Task(this.plugin);
+        this.task = new timerTask(this.plugin);
         this.CurrentDDD = getDayOfWeek();
     }
     private String getDayOfWeek() {
@@ -37,19 +37,19 @@ public class schedule_task extends BukkitRunnable {
         int day = calendar.get(Calendar.DAY_OF_WEEK);
         switch (day) {
             case Calendar.SUNDAY:
-                return "Sunday";
+                return "Chu_Nhat";
             case Calendar.MONDAY:
-                return "Monday";
+                return "Thu_Hai";
             case Calendar.TUESDAY:
-                return "Tuesday";
+                return "Thu_Ba";
             case Calendar.WEDNESDAY:
-                return "Wednesday";
+                return "Thu_Tu";
             case Calendar.THURSDAY:
-                return "Thursday";
+                return "Thu_Nam";
             case Calendar.FRIDAY:
-                return "Friday";
+                return "Thu_Sau";
             case Calendar.SATURDAY:
-                return "Saturday";
+                return "Thu_Bay";
             default:
                 return "";
         }
@@ -60,9 +60,12 @@ public class schedule_task extends BukkitRunnable {
         JsonWritter.LoadData();
         List<TimeData> data = this.JsonWritter.getDayTimeList(CurrentDDD);
         DateTime timeData = DateTime.now(zone);
+
         String currentTime = fmt.print(timeData);
-        if (Objects.equals(currentTime, "23:59")) { this.CurrentDDD = getDayOfWeek(); }
+        if (Objects.equals(currentTime, "00:00")) { this.CurrentDDD = getDayOfWeek(); }
+        System.out.println(currentTime);
         for (TimeData items : data) {
+
             if (Objects.equals(items.getTime(), currentTime)) {
                 getServer().dispatchCommand(getServer().getConsoleSender(), items.getCommand());
             }

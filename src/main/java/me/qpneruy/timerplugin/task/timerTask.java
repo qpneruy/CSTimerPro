@@ -8,10 +8,10 @@ import java.time.format.DateTimeFormatter;
 
 import static org.bukkit.Bukkit.getServer;
 
-public class Timer_Task {
+public class timerTask {
     private final TimerPro plugin;
 
-    public Timer_Task(TimerPro plugin) {
+    public timerTask(TimerPro plugin) {
         this.plugin = plugin;
     }
 
@@ -23,8 +23,8 @@ public class Timer_Task {
         getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable() {
             @Override
             public void run() {
-                BukkitRunnable Task = new schedule_task(Timer_Task.this.plugin);
-                Task.runTaskTimer(Timer_Task.this.plugin, 0L, 1200L);
+                BukkitRunnable Task = new schedule_task(timerTask.this.plugin);
+                Task.runTaskTimer(timerTask.this.plugin, 0L, 1200L);
             }
         }, secondsUntilNextMinute * 20L);
     }

@@ -1,5 +1,6 @@
 package me.qpneruy.timerplugin.command;
 
+import me.qpneruy.timerplugin.TimerPro;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -9,13 +10,19 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Add_command_cmp implements TabCompleter {
+public class addCommand_cmp implements TabCompleter {
+    private final TimerPro plugin;
+
+    public addCommand_cmp(TimerPro plugin) {
+        this.plugin = plugin;
+    }
+
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         List<String> completions = new ArrayList<>();
         if (command.getName().equalsIgnoreCase("Them_lenh")) {
             if (strings.length == 1) {
-                completions.addAll(getDay());
+                completions.addAll(plugin.getDay());
             } if (strings.length == 2) {
                 completions.addAll(getTime());
             }
@@ -31,15 +38,5 @@ public class Add_command_cmp implements TabCompleter {
         times.add("18:00");
         return times;
     }
-    private List<String> getDay() {
-        List<String> dayList = new ArrayList<>();
-        dayList.add("Sunday");
-        dayList.add("Monday");
-        dayList.add("Tuesday");
-        dayList.add("Wednesday");
-        dayList.add("Thursday");
-        dayList.add("Friday");
-        dayList.add("Saturday");
-        return dayList;
-    }
+
 }

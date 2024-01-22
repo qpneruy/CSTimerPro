@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Objects;
 
-public class TimeDateChange implements CommandExecutor {
+public class timeDateChange implements CommandExecutor {
 
 
     @Override
@@ -30,7 +30,7 @@ public class TimeDateChange implements CommandExecutor {
         TimeData data = commandData.get(index);
         if (strings[2].equals("time")) {
             player.sendMessage("§6[TimerPro]: §fĐã thay đổi thời gian.");
-            player.sendMessage("§6[TimerPro]: §f└->  §c" + data.getTime() + " §f-> §a" + strings[2]);
+            player.sendMessage("§6[TimerPro]: §f└->  §c" + data.getTime() + " §f-> §a" + strings[3]);
             data.setTime(strings[3]);
         } else if (strings[2].equals("command")) {
             StringBuilder full_command = new StringBuilder(strings[2]);
@@ -47,7 +47,7 @@ public class TimeDateChange implements CommandExecutor {
             }
         }
 
-        setData.setDayTimeData(strings[0], Integer.parseInt(strings[0]) - 1, data);
+        setData.setDayTimeData(strings[0], index, data);
         return false;
     }
 }

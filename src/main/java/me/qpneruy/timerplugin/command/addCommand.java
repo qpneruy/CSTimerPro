@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Add_Command implements CommandExecutor {
+public class addCommand implements CommandExecutor {
 
     private static final String TIME_24H_REGEX = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
 
