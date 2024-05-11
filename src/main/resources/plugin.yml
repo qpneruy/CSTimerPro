@@ -3,7 +3,7 @@ version: '${project.version}'
 author: Tinhde061
 main: me.qpneruy.timerplugin.TimerPro
 api-version: '1.18'
-description: Plugin đặt thời để thực thi gian cho lệnh.
+description: Plugin đặt thời gian để thực thi lệnh.
 depend: [PlaceholderAPI]
 commands:
   Sync_Time:
@@ -21,9 +21,6 @@ commands:
   Doi_DuLieu:
     description: "Thay đỗi dữ liệu tệp json :v."
     permission: TimerPro.Doi_DuLieu
-  freload:
-    description: "hot reload :)"
-    permission: TimerPro.freload
 
 permissions:
   TimerPro.Sync_Time:

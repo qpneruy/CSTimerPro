@@ -1,10 +1,10 @@
 package me.qpneruy.timerplugin.task;
 
-public class TimeData {
+public class TimeType {
     private String time;
     private String command;
 
-    public TimeData(String time, String command) {
+    public TimeType(String time, String command) {
         this.time = time;
         this.command = command;
     }

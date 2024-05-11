@@ -1,8 +1,9 @@
-package me.qpneruy.timerplugin.command;
+package me.qpneruy.timerplugin.Command.TabCompleter;
 
 import me.qpneruy.timerplugin.TimerPro;
-import me.qpneruy.timerplugin.task.TimeData;
-import me.qpneruy.timerplugin.task.archive;
+import me.qpneruy.timerplugin.task.TimeType;
+import me.qpneruy.timerplugin.task.archiver;
+import me.qpneruy.timerplugin.task.TimeCalibarate;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -10,13 +11,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-public class timeDataChange_cmp implements TabCompleter {
+public class SchedCmdOperations implements TabCompleter {
     private final TimerPro plugin;
 
-    public timeDataChange_cmp(TimerPro plugin) {
+    public SchedCmdOperations(TimerPro plugin) {
         this.plugin = plugin;
     }
 
@@ -29,10 +30,13 @@ public class timeDataChange_cmp implements TabCompleter {
             }
             if (strings.length == 2) {
                 System.out.println(strings[0]);
-                List<String> id = new ArrayList<>();
-                id = getId(strings[0]);
+                List<String> id;
+                String DayOfWeek = strings[0];
+                TimeCalibarate Timer = new TimeCalibarate();
+                if (Objects.equals(strings[0], "Hom_Nay")) { DayOfWeek = Timer.getDayOfWeek(); }
+                id = getId(DayOfWeek);
                 if (id == null) {
-                    completions.add("Khong co lenh");
+                    return null;
                 } else completions.addAll(id);
             } else if (strings.length == 3) {
                 completions.addAll(getSuggest());
@@ -43,8 +47,8 @@ public class timeDataChange_cmp implements TabCompleter {
 
     private List<String> getId(String DayOfWeek) {
         List<String> id = new ArrayList<>();
-        archive getCommand = new archive();
-        List<TimeData> commandp = getCommand.getDayTimeList(DayOfWeek);
+        archiver getCommand = new archiver();
+        List<TimeType> commandp = getCommand.getDayTimeList(DayOfWeek);
         int total_command = commandp.size();
         if (commandp.isEmpty()) {
             return null;

@@ -1,4 +1,4 @@
-package me.qpneruy.timerplugin.placeholder;
+package me.qpneruy.timerplugin.Placeholder;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;

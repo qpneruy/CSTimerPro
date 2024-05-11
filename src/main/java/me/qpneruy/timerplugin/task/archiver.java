@@ -11,15 +11,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.*;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
-public class archive {
-    private static final Logger logger = Logger.getLogger(archive.class.getName());
-    private Map<String, List<TimeData>> timerData = new HashMap<>();
+public class archiver {
+    private static final Logger logger = Logger.getLogger(archiver.class.getName());
+    private Map<String, List<TimeType>> timerData = new HashMap<>();
     public final String jsonPath;
 
-    public archive() {
+    public archiver() {
         this.jsonPath = TimerPro.getPlugin().getDataFolder().getAbsolutePath() + "/command_data.json";
         LoadData();
     }
@@ -27,22 +26,22 @@ public class archive {
 
 
     public void AddCommand(String DayOfWeek, String time, String Command) {
-        TimeData TimeData = new TimeData(time, Command);
-        List<TimeData> DayTimeData = this.timerData.get(DayOfWeek);
+        TimeType TimeData = new TimeType(time, Command);
+        List<TimeType> DayTimeData = this.timerData.get(DayOfWeek);
         DayTimeData.add(TimeData);
         SaveData();
     }
     public void RemoveCommand(String DayOfWeek, int index) {
-        List<TimeData> DayTimeData = this.timerData.get(DayOfWeek);
+        List<TimeType> DayTimeData = this.timerData.get(DayOfWeek);
         DayTimeData.remove(index);
         SaveData();
     }
 
-    public List<TimeData> getDayTimeList(String DayOfWeek) {
+    public List<TimeType> getDayTimeList(String DayOfWeek) {
         return this.timerData.get(DayOfWeek);
     }
-    public void setDayTimeData(String DayOfWeek, int index, TimeData TimeData) {
-        List<TimeData> DayTimeData = this.timerData.get(DayOfWeek);
+    public void setDayTimeData(String DayOfWeek, int index, TimeType TimeData) {
+        List<TimeType> DayTimeData = this.timerData.get(DayOfWeek);
         DayTimeData.set(index, TimeData);
         SaveData();
     }
@@ -50,14 +49,14 @@ public class archive {
     public void LoadData() {
         try (FileReader reader = new FileReader(jsonPath)) {
             Gson gson = new Gson();
-            Type type = new TypeToken<Map<String, List<TimeData>>>() {}.getType();
+            Type type = new TypeToken<Map<String, List<TimeType>>>() {}.getType();
             this.timerData = gson.fromJson(reader, type);
         } catch (FileNotFoundException e) {
-            logger.log(Level.SEVERE, "File not found", e);
+            logger.log(Level.SEVERE, "Không tìm thấy tệp", e);
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error reading file", e);
+            logger.log(Level.SEVERE, "Không thể đọc tệp", e);
         } catch (com.google.gson.JsonSyntaxException e) {
-            logger.log(Level.SEVERE, "Error parsing JSON syntax", e);
+            logger.log(Level.SEVERE, "Cú pháp tệp Json không hợp lệ", e);
         }
     }
 
@@ -67,7 +66,7 @@ public class archive {
             String json = gson.toJson(timerData);
             writer.write(json);
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error while save data: ", e);
+            logger.log(Level.SEVERE, "Lỗi: ", e);
         }
     }
 }

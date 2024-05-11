@@ -1,4 +1,4 @@
-package me.qpneruy.timerplugin.command;
+package me.qpneruy.timerplugin.Command.TabCompleter;
 
 import me.qpneruy.timerplugin.TimerPro;
 import org.bukkit.command.Command;
@@ -10,10 +10,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class addCommand_cmp implements TabCompleter {
+public class AddSchedCmd implements TabCompleter {
     private final TimerPro plugin;
 
-    public addCommand_cmp(TimerPro plugin) {
+    public AddSchedCmd(TimerPro plugin) {
         this.plugin = plugin;
     }
 
