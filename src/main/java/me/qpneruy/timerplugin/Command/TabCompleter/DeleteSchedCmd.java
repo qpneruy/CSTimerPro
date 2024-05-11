@@ -1,5 +1,6 @@
-package me.qpneruy.timerplugin.command;
+package me.qpneruy.timerplugin.Command.TabCompleter;
 
+import me.qpneruy.timerplugin.TimerPro;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -9,24 +10,21 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Add_command_cmp implements TabCompleter {
+public class DeleteSchedCmd implements TabCompleter {
+    private final TimerPro plugin;
+
+    public DeleteSchedCmd(TimerPro plugin) {
+        this.plugin = plugin;
+    }
+
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         List<String> completions = new ArrayList<>();
-        if (command.getName().equalsIgnoreCase("Them_lenh")) {
+        if (command.getName().equalsIgnoreCase("Xoa_Lenh")) {
             if (strings.length == 1) {
-                completions.addAll(getTime());
+                completions.addAll(plugin.getDay());
             }
         }
         return completions;
-    }
-
-    private List<String> getTime() {
-        List<String> times = new ArrayList<>();
-        times.add("06:00");
-        times.add("09:00");
-        times.add("12:00");
-        times.add("18:00");
-        return times;
     }
 }
