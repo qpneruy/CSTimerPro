@@ -5,6 +5,7 @@ main: me.qpneruy.timerplugin.TimerPro
 api-version: '1.18'
 description: Plugin đặt thời gian để thực thi lệnh.
 depend: [PlaceholderAPI]
+
 commands:
   Sync_Time:
     description: "Đồng bộ thời gian thật!."
@@ -18,7 +19,7 @@ commands:
   Xem_Lenh:
     description: "Hiện tất cả lệnh đã được thêm."
     permission: TimerPro.Xem_Lenh
-  Doi_DuLieu:
+  Sua_Lenh:
     description: "Thay đỗi dữ liệu tệp json :v."
     permission: TimerPro.Doi_DuLieu
 
@@ -32,9 +33,6 @@ permissions:
   TimerPro.Xem_Lenh:
     description: Quyền sử dụng lệnh Xem_Lenh
     default: op
-  TimerPro.Doi_DuLieu:
+  TimerPro.Sua_Lenh:
     description: Quyền sử dụng lệnh Doi_DuLieu
-    default: op
-  TimerPro.freload:
-    description: Quyền sử dụng lệnh freload
     default: op
