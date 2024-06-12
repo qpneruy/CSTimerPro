@@ -1,0 +1,21 @@
+{
+  "DayOfWeek": {
+    "Chu_Nhat": {},
+    "Thu_Hai": {
+      "Te1": {
+        "command": "echo Hello World",
+        "startTime": "08:00",
+        "eachMinutes": true
+      }
+    },
+    "Moi_Ngay": {},
+    "Thu_Tu": {},
+    "Thu_Sau": {},
+    "Thu_Ba": {},
+    "Thu_Nam": {},
+    "Thu_Bay": {}
+  },
+  "Dates": {
+    "06/22/2024": {}
+  }
+}

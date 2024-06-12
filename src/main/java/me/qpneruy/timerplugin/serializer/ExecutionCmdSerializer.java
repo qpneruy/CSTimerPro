@@ -23,6 +23,9 @@ public class ExecutionCmdSerializer implements JsonSerializer<ExecutionCmd> {
         if (src.isEachMinutes()) {
             jsonObject.addProperty("eachMinutes", src.isEachMinutes());
         }
+        if (src.isEnable()) {
+            jsonObject.addProperty("isEnable", src.isEachMinutes());
+        }
         return jsonObject;
     }
 }

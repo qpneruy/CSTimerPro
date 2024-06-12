@@ -14,8 +14,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.bukkit.Bukkit.getServer;
-
 public class EditSchedCmd implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
@@ -39,7 +37,7 @@ public class EditSchedCmd implements CommandExecutor {
             if (Objects.equals(cmd.getName(), strings[1])) {
                 Gui EditorMenu = new Gui();
                 Inventory inventory = EditorMenu.Editor(cmd);
-                Menu.addPlayer(player, inventory, cmd);
+                Menu.addPlayer(player, inventory, cmd, EditCmd);
                 player.openInventory(inventory);
             }
         }

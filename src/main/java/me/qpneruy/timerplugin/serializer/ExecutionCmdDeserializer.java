@@ -16,10 +16,13 @@ public class ExecutionCmdDeserializer implements JsonDeserializer<ExecutionCmd> 
             cmd.setEndTime(jsonObject.get("endTime").getAsString());
         }
         if (jsonObject.has("eachHours")) {
-            cmd.setEachHour(jsonObject.get("eachHours").getAsBoolean());
+            if (jsonObject.get("eachHours").getAsBoolean()) cmd.ToggleEachHour();
         }
         if (jsonObject.has("eachMinutes")) {
-            cmd.setEachMinutes(jsonObject.get("eachMinutes").getAsBoolean());
+            if (jsonObject.get("eachMinutes").getAsBoolean()) cmd.ToggleEachMinutes();
+        }
+        if (jsonObject.has("isEnable")) {
+            if (jsonObject.get("isEnable").getAsBoolean()) cmd.ToggleEachMinutes();
         }
         return cmd;
     }

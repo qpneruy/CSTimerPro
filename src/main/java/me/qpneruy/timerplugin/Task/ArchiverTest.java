@@ -1,5 +1,6 @@
 package me.qpneruy.timerplugin.Task;
 
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class ArchiverTest {
@@ -16,6 +17,11 @@ public class ArchiverTest {
 
         System.out.println("Adding command...");
         byte add1Result = archiverInstance.AddCommand("Te1", "echo Hello World", "Thu_Hai", "08:00");
+        Map<String, ExecutionCmd> alo = archiverInstance.getDateTime("Thu_Hai");
+        for (Map.Entry<String, ExecutionCmd> entry : alo.entrySet() ) {
+            ExecutionCmd a1 = entry.getValue();
+            a1.ToggleEachMinutes();
+        }
         System.out.println("Add result: " + add1Result);
 
         // Test adding a command with a specific date

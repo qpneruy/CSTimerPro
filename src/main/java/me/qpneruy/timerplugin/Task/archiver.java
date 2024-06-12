@@ -4,6 +4,7 @@ import com.google.gson.*;
 import me.qpneruy.timerplugin.TimerPro;
 import me.qpneruy.timerplugin.serializer.ExecutionCmdDeserializer;
 import me.qpneruy.timerplugin.serializer.ExecutionCmdSerializer;
+import org.bukkit.Bukkit;
 
 import java.io.*;
 import java.util.*;
@@ -103,6 +104,7 @@ public class archiver {
                         JsonObject commandsForDay = dayEntry.getValue().getAsJsonObject();
                         for (Map.Entry<String, JsonElement> cmdEntry : commandsForDay.entrySet()) {
                             ExecutionCmd cmd = gson.fromJson(cmdEntry.getValue(), ExecutionCmd.class);
+                            cmd.setExecDateTime(dayEntry.getKey());
                             cmd.setName(cmdEntry.getKey());
                             dayCmds.put(cmdEntry.getKey(), cmd);
                         }

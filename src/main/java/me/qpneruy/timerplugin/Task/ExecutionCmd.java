@@ -14,7 +14,7 @@ public class ExecutionCmd {
     private String endTime;
     private boolean eachHours;
     private boolean eachMinutes;
-    private boolean isEnable = false;
+    private boolean isEnable = true;
 
     public boolean init(String name, String command, String execDateTime, String startTime) {
         this.name = name;
@@ -24,7 +24,7 @@ public class ExecutionCmd {
         this.endTime = this.startTime;
         this.eachHours = false;
         this.eachMinutes = false;
-        this.isEnable = false;
+        this.isEnable = true;
         return true;
     }
 
@@ -69,6 +69,7 @@ public class ExecutionCmd {
         }
         return false;
     }
+
     public void ToggleEachHour() {
         if (this.eachHours) {
             this.eachHours = false;
