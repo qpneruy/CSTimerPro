@@ -30,7 +30,7 @@ public class DeleteSchedCmd implements CommandExecutor {
             DateOrDay = getDayOfWeek();
         }
         archiver DelArchiver = new archiver();
-        if (!DelArchiver.RemoveCommand(DateOrDay, cmdName)) {
+        if (!DelArchiver.removeCommand(DateOrDay, cmdName)) {
             player.sendMessage("§6[TimerPro]: §cKhông tìm thấy lệnh cần xóa!");
             return false;
         }

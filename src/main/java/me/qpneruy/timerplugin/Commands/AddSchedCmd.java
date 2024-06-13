@@ -37,7 +37,7 @@ public class AddSchedCmd implements CommandExecutor {
         for (int i = 4; i < strings.length; ++i) {
             FullCommand.append(" ").append(strings[i]);
         }
-        if (JsonWritter.AddCommand(Name, FullCommand.toString(), DayorDate, Time)   == -1) {
+        if (JsonWritter.addCommand(Name, FullCommand.toString(), DayorDate, Time)   == -1) {
             player.sendMessage("§6[TimerPro]: §cLỗi Định Dạng Thời Gian!");
             return false;
         }

@@ -20,11 +20,11 @@ public class ExecutionCmdSerializer implements JsonSerializer<ExecutionCmd> {
         if (src.isEachHour()) {
             jsonObject.addProperty("eachHours", src.isEachHour());
         }
-        if (src.isEachMinutes()) {
-            jsonObject.addProperty("eachMinutes", src.isEachMinutes());
+        if (src.isEachMinute()) {
+            jsonObject.addProperty("eachMinutes", src.isEachMinute());
         }
-        if (src.isEnable()) {
-            jsonObject.addProperty("isEnable", src.isEachMinutes());
+        if (src.isEnabled()) {
+            jsonObject.addProperty("isEnable", src.isEnabled());
         }
         return jsonObject;
     }

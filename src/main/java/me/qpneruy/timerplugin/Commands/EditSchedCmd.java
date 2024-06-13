@@ -14,33 +14,40 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 import java.util.Objects;
 
+import static me.qpneruy.timerplugin.Task.TimeCalibarate.getDayOfWeek;
+
 public class EditSchedCmd implements CommandExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        if (!(commandSender instanceof Player)) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        if (!(sender instanceof Player)) {
             Bukkit.getConsoleSender().sendMessage("Lệnh này chỉ có thể thực hiện trong game!");
             return false;
         }
-        Player player = (Player)commandSender;
+        Player player = (Player) sender;
         if (!player.hasPermission("TImerPro.Edit")) {
             player.sendMessage("§6[TimerPro]: §cBạn không có quyền sử dụng lệnh này!");
             return false;
         }
-        if (strings.length < 1) {
+        if (args.length < 2) {
             player.sendMessage("§6[TimerPro]: §cTruyền tham số vào đê!");
             return false;
         }
-        archiver EditCmd = new archiver();
-        Map<String, ExecutionCmd> cmds = EditCmd.getDateTime(strings[0]);
+        archiver editCmd = new archiver();
+        String targetDay = args[0].equals("Hom_Nay") ? getDayOfWeek() : args[0];
+        String commandName = args[1];
+        Map<String, ExecutionCmd> cmds = editCmd.getCommands(targetDay);
+
         for (Map.Entry<String, ExecutionCmd> entry : cmds.entrySet()) {
             ExecutionCmd cmd = entry.getValue();
-            if (Objects.equals(cmd.getName(), strings[1])) {
-                Gui EditorMenu = new Gui();
-                Inventory inventory = EditorMenu.Editor(cmd);
-                Menu.addPlayer(player, inventory, cmd, EditCmd);
+            if (Objects.equals(cmd.getName(), commandName)) {
+                Gui editorMenu = new Gui();
+                Inventory inventory = editorMenu.Editor(cmd);
+                Menu.addPlayer(player, inventory, cmd, editCmd);
                 player.openInventory(inventory);
+                return true;
             }
         }
-        return true;
+        player.sendMessage("§6[TimerPro]: §cKhông tìm thấy lệnh cần chỉnh sửa!");
+        return false;
     }
 }

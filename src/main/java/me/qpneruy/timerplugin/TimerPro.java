@@ -56,7 +56,7 @@ public final class TimerPro extends JavaPlugin {
     }
     private void loadTabcompleter() {
         Objects.requireNonNull(getCommand("Them_lenh")).setTabCompleter(new me.qpneruy.timerplugin.Commands.TabCompleter.AddSchedCmd());
-//        Objects.requireNonNull(getCommand("Doi_DuLieu")).setTabCompleter(new SchedCmdOperations(this));
+        Objects.requireNonNull(getCommand("sua_lenh")).setTabCompleter(new me.qpneruy.timerplugin.Commands.TabCompleter.DeleteSchedCmd());
         Objects.requireNonNull(getCommand("Xem_Lenh")).setTabCompleter(new me.qpneruy.timerplugin.Commands.TabCompleter.ShowSchedCmd());
         Objects.requireNonNull(getCommand("Xoa_Lenh")).setTabCompleter(new me.qpneruy.timerplugin.Commands.TabCompleter.DeleteSchedCmd());
     }
