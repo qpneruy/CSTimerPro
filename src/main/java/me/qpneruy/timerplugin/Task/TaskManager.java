@@ -3,10 +3,9 @@ package me.qpneruy.timerplugin.Task;
 import me.qpneruy.timerplugin.TimerPro;
 import org.bukkit.scheduler.BukkitRunnable;
 
-
 import static org.bukkit.Bukkit.getServer;
 
-public class TaskManager { ;
+public class TaskManager {
     private final TimerPro plugin;
 
     public TaskManager(TimerPro plugin) {
@@ -21,4 +20,5 @@ public class TaskManager { ;
             Task.runTaskTimer(TaskManager.this.plugin, 0L, 1200L);
         }, secondsUntilNextMinute * 20L);
     }
+
 }

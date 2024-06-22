@@ -1,6 +1,7 @@
 package me.qpneruy.timerplugin.Commands;
 
 import me.qpneruy.timerplugin.Task.archiver;
+import me.qpneruy.timerplugin.Types.ExecutionCmd;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,8 +17,9 @@ public class AddSchedCmd implements CommandExecutor {
             commandSender.sendMessage("[TimerPro]: Lệnh này chỉ có thể sử dụng trong game!");
             return false;
         }
+        //themlenh <Tên Lệnh> <Ngày Chạy> <Thời gian 24h> <lệnh>
         Player player = (Player) commandSender;
-        if (!player.hasPermission("TimerPro.Them_Lenh")) {
+        if (!player.hasPermission("TimerPro.themlenh")) {
             player.sendMessage("§6[TimerPro]: §cBạn không có quyền sử dụng lệnh này!");
             return false;
         }
@@ -37,10 +39,12 @@ public class AddSchedCmd implements CommandExecutor {
         for (int i = 4; i < strings.length; ++i) {
             FullCommand.append(" ").append(strings[i]);
         }
-        if (JsonWritter.addCommand(Name, FullCommand.toString(), DayorDate, Time)   == -1) {
+        ExecutionCmd cmd = new ExecutionCmd();
+        if (!cmd.init(Name, FullCommand.toString(), DayorDate, Time)) {
             player.sendMessage("§6[TimerPro]: §cLỗi Định Dạng Thời Gian!");
             return false;
         }
+        JsonWritter.addCommand(cmd);
         player.sendMessage("§6[TimerPro]:§f Đã thêm lệnh §a\"" + Name + "\"§f Thành Công!");
     return true;
     }

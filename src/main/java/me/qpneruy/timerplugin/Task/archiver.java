@@ -1,32 +1,32 @@
 package me.qpneruy.timerplugin.Task;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import me.qpneruy.timerplugin.TimerPro;
+import me.qpneruy.timerplugin.Types.ExecutionCmd;
 import me.qpneruy.timerplugin.serializer.ExecutionCmdDeserializer;
 import me.qpneruy.timerplugin.serializer.ExecutionCmdSerializer;
-import org.bukkit.Bukkit;
 
 import java.io.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static me.qpneruy.timerplugin.Task.ExecutionCmd.isValidDate;
 import static me.qpneruy.timerplugin.Task.JsonValidator.isValidJson;
+import static me.qpneruy.timerplugin.Types.ExecutionCmd.isValidDate;
 
-/**
- * Lớp chịu trách nhiệm lưu trữ và quản lý các lệnh hẹn giờ (ExecutionCmd) vào file JSON.
- */
 public class archiver {
     private static final Logger logger = Logger.getLogger(archiver.class.getName());
 
-    private final Map<String, Map<String, ExecutionCmd>> dayCommands = new HashMap<>();
-    private final Map<String, Map<String, ExecutionCmd>> dateCommands = new HashMap<>();
+    private static final Map<String, Map<String, ExecutionCmd>> dayCommands = new HashMap<>();
+    private static final Map<String, Map<String, ExecutionCmd>> dateCommands = new HashMap<>();
     private final String jsonPath;
 
-    /**
-     * Khởi tạo đối tượng archiver và tải dữ liệu từ file JSON.
-     */
     public archiver() {
         this.jsonPath = TimerPro.getPlugin().getDataFolder().getAbsolutePath() + "/Commands.json";
         File file = new File(jsonPath);
@@ -49,38 +49,28 @@ public class archiver {
         return dayCommands.getOrDefault(dayOrDate, Collections.emptyMap());
     }
 
-    /**
-     * Thêm một lệnh hẹn giờ mới.
-     *
-     * @param name         Tên của lệnh.
-     * @param command     Nội dung lệnh.
-     * @param dayOrDate    Ngày hoặc ngày tháng thực hiện lệnh.
-     * @param startTime    Thời gian bắt đầu thực hiện lệnh.
-     * @return 0 nếu thêm thành công, -1 nếu lỗi định dạng thời gian, -3 nếu lỗi lưu dữ liệu.
-     */
-    public int addCommand(String name, String command, String dayOrDate, String startTime) {
-        ExecutionCmd cmd = new ExecutionCmd();
-        if (!cmd.init(name, command, dayOrDate, startTime)) {
-            return -1;
-        }
+    public int addCommand(ExecutionCmd cmd) {
+        String dayOrDate = cmd.getExecDateTime();
 
         if (isValidDate(dayOrDate)) {
-            dateCommands.computeIfAbsent(dayOrDate, k -> new HashMap<>()).put(name, cmd);
+            dateCommands.computeIfAbsent(dayOrDate, k -> new HashMap<>()).put(cmd.getName(), cmd);
         } else {
-            dayCommands.computeIfAbsent(dayOrDate, k -> new HashMap<>()).put(name, cmd);
+            dayCommands.computeIfAbsent(dayOrDate, k -> new HashMap<>()).put(cmd.getName(), cmd);
         }
 
         return save() ? 0 : -3;
     }
 
-    /**
-     * Xóa một lệnh hẹn giờ.
-     *
-     * @param dateTime Ngày giờ của lệnh cần xóa.
-     * @param name     Tên của lệnh cần xóa.
-     * @return true nếu xóa thành công, false nếu không tìm thấy lệnh.
-     */
-    public boolean removeCommand(String dateTime, String name) {
+    public boolean removeCommand(String dateTime, String Name) {
+        ExecutionCmd tempCmd = new ExecutionCmd();
+        tempCmd.setName(Name);
+        tempCmd.setExecDateTime(dateTime);
+        return removeCommand(tempCmd);
+    }
+
+    public boolean removeCommand(ExecutionCmd cmd) {
+        String dateTime = cmd.getExecDateTime();
+        String name = cmd.getName();
         boolean removed = false;
         if (isValidDate(dateTime)) {
             Map<String, ExecutionCmd> commands = dateCommands.get(dateTime);
@@ -98,9 +88,6 @@ public class archiver {
         return removed && save();
     }
 
-    /**
-     * Khởi tạo file JSON với dữ liệu trống.
-     */
     private void initializeEmptyJson() {
         try (FileWriter writer = new FileWriter(jsonPath)) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -119,11 +106,7 @@ public class archiver {
         }
     }
 
-    /**
-     * Tải dữ liệu từ file JSON.
-     *
-     * @return true nếu tải thành công, false nếu gặp lỗi.
-     */
+
     public boolean load() {
         if (!isValidJson(jsonPath)) {
             return false;
@@ -145,9 +128,6 @@ public class archiver {
         return true;
     }
 
-    /**
-     * Hàm phụ trợ để tải dữ liệu lệnh từ JSON object.
-     */
     private void loadCommandsFromJson(JsonObject jsonObject, String type, Map<String, Map<String, ExecutionCmd>> commandsMap) {
         if (jsonObject.has(type)) {
             JsonObject commandsJson = jsonObject.getAsJsonObject(type);
@@ -169,11 +149,7 @@ public class archiver {
             }
         }
     }
-    /**
-     * Lưu dữ liệu vào file JSON.
-     *
-     * @return true nếu lưu thành công, false nếu gặp lỗi.
-     */
+
     public boolean save() {
         try (FileWriter writer = new FileWriter(jsonPath)) {
             Gson gson = new GsonBuilder()
@@ -193,9 +169,7 @@ public class archiver {
         return true;
     }
 
-    /**
-     * Hàm phụ trợ để chuyển đổi dữ liệu lệnh sang JSON object.
-     */
+
     private JsonObject serializeCommandsToJson(Map<String, Map<String, ExecutionCmd>> commandsMap, Gson gson) {
         JsonObject jsonObject = new JsonObject();
         for (Map.Entry<String, Map<String, ExecutionCmd>> entry : commandsMap.entrySet()) {
@@ -208,15 +182,3 @@ public class archiver {
         return jsonObject;
     }
 }
-
-/*
- * Những thay đổi đã được thực hiện:
- *
- * - Tối ưu hóa getCommands: Sử dụng getOrDefault để tránh NullPointerException khi không tìm thấy key.
- * - Chia nhỏ method: Tách load và save thành các method nhỏ hơn để dễ đọc và bảo trì hơn.
- * - Sử dụng forEach: Thay thế vòng lặp for bằng forEach khi có thể để code ngắn gọn hơn.
- * - Thêm comment: Bổ sung comment giải thích chi tiết cho từng method và các phần logic quan trọng.
- * - Chuẩn hóa tên biến: Đổi tên biến thành camelCase để tuân thủ chuẩn Java.
- * - Sử dụng try-with-resources: Đảm bảo file luôn được đóng đúng cách sau khi sử dụng.
- * - Rút gọn code: Loại bỏ code dư thừa và lặp lại.
- */

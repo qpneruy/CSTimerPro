@@ -1,38 +1,41 @@
 name: TimerPro
 version: '${project.version}'
-author: Tinhde061
+author: qpneruy
 main: me.qpneruy.timerplugin.TimerPro
 api-version: '1.18'
-description: Plugin đặt thời gian để thực thi lệnh.
+description: Lên Lịch Thực thi cho lệnh
 depend: [PlaceholderAPI]
 
 commands:
-  Sync_Time:
-    description: "Đồng bộ thời gian thật!."
-    permission: TimerPro.Sync_Time
-  Them_Lenh:
-    description: "Thêm giờ thực thi lệnh!."
-    permission: TimerPro.Them_Lenh
-  Xoa_Lenh:
-    description: "Xóa giờ thực thi lệnh!."
-    permission: TimerPro.Xoa_Lenh
-  Xem_Lenh:
+  themlenh:
+    description: "Thêm lệnh vào tim em"
+    permission: TimerPro.themlenh
+  xoalenh:
+    description: "Xóa lệnh đã được thêm."
+    permission: TimerPro.xoalenh
+  xemlenh:
     description: "Hiện tất cả lệnh đã được thêm."
-    permission: TimerPro.Xem_Lenh
-  Sua_Lenh:
-    description: "Thay đỗi dữ liệu tệp json :v."
-    permission: TimerPro.Doi_DuLieu
+    permission: TimerPro.xemlenh
+  sualenh:
+    description: "Thay đổi thông số lệnh."
+    permission: TimerPro.sualenh
+  timerpro:
+    description: "Menu Lệnh."
+    permission: TimerPro.timerpro
 
 permissions:
-  TimerPro.Sync_Time:
-    description: Quyền sử dụng lệnh Sync_Time
+  TimerPro.themlenh:
+    description: Quyền sử dụng Themlenh
     default: op
-  TimerPro.Them_Lenh:
-    description: Quyền sử dụng Them_Lenh
+  TimerPro.xemlenh:
+    description: Quyền sử dụng lệnh Xemlenh
     default: op
-  TimerPro.Xem_Lenh:
-    description: Quyền sử dụng lệnh Xem_Lenh
+  TimerPro.sualenh:
+    description: Quyền sử dụng sualenh
     default: op
-  TimerPro.Sua_Lenh:
-    description: Quyền sử dụng lệnh Doi_DuLieu
+  TimerPro.xoalenh:
+    description: Quyền sử dụng lệnh Xoalenh
+    default: op
+  TimerPro.timerpro:
+    description: Quyền sử dụng lệnh timerpro
     default: op

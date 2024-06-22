@@ -1,8 +1,8 @@
 package me.qpneruy.timerplugin.Commands;
 
-import me.qpneruy.timerplugin.Events.Menu;
-import me.qpneruy.timerplugin.Task.ExecutionCmd;
+import me.qpneruy.timerplugin.Gui.Menu;
 import me.qpneruy.timerplugin.Task.archiver;
+import me.qpneruy.timerplugin.Types.ExecutionCmd;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,9 +11,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static me.qpneruy.timerplugin.Gui.Editor.Editor;
 import static me.qpneruy.timerplugin.Task.TimeCalibarate.getDayOfWeek;
 
 public class EditSchedCmd implements CommandExecutor {
@@ -24,7 +26,7 @@ public class EditSchedCmd implements CommandExecutor {
             return false;
         }
         Player player = (Player) sender;
-        if (!player.hasPermission("TImerPro.Edit")) {
+        if (!player.hasPermission("TImerPro.sualenh")) {
             player.sendMessage("§6[TimerPro]: §cBạn không có quyền sử dụng lệnh này!");
             return false;
         }
@@ -40,9 +42,11 @@ public class EditSchedCmd implements CommandExecutor {
         for (Map.Entry<String, ExecutionCmd> entry : cmds.entrySet()) {
             ExecutionCmd cmd = entry.getValue();
             if (Objects.equals(cmd.getName(), commandName)) {
-                Gui editorMenu = new Gui();
-                Inventory inventory = editorMenu.Editor(cmd);
-                Menu.addPlayer(player, inventory, cmd, editCmd);
+                Menu.addPlayerCommand(player, cmd, editCmd);
+                Inventory inventory = Editor(cmd);
+                Map<String, Inventory> gui = new HashMap<>();
+                gui.put("page_1", inventory);
+                Menu.addPlayerGui(player, gui);
                 player.openInventory(inventory);
                 return true;
             }

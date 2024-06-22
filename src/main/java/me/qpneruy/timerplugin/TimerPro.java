@@ -1,19 +1,20 @@
 package me.qpneruy.timerplugin;
+
+import me.qpneruy.timerplugin.Gui.Menu;
 import me.qpneruy.timerplugin.Task.TaskManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import me.qpneruy.timerplugin.Events.Menu;
-import java.util.*;
-
+import java.util.Objects;
+import net.kyori.adventure.audience.ForwardingAudience;
 
 public final class TimerPro extends JavaPlugin {
     public static TimerPro plugin;
     public static TimerPro getPlugin() {
         return plugin;
     }
-    //public static MenuInventory menuInventory = new MenuInventory();
     @Override
     public void onEnable() {
+
         plugin = this;
         getConfig().options().copyDefaults();
         saveDefaultConfig();
@@ -37,7 +38,6 @@ public final class TimerPro extends JavaPlugin {
         }
         this.loadCommand();
         this.loadTabcompleter();
-        //new Expansion().register();
         this.registerTask();
 
     }
@@ -49,16 +49,17 @@ public final class TimerPro extends JavaPlugin {
         getLogger().info("-------------------------------");
     }
     private void loadCommand() {
-        Objects.requireNonNull(getCommand("Xem_Lenh")).setExecutor(new me.qpneruy.timerplugin.Commands.ShowSchedCmd());
-        Objects.requireNonNull(getCommand("Them_Lenh")).setExecutor(new me.qpneruy.timerplugin.Commands.AddSchedCmd());
-        Objects.requireNonNull(getCommand("Xoa_Lenh")).setExecutor(new me.qpneruy.timerplugin.Commands.DeleteSchedCmd());
-        Objects.requireNonNull(getCommand("Sua_lenh")).setExecutor(new me.qpneruy.timerplugin.Commands.EditSchedCmd());
+        Objects.requireNonNull(getCommand("xemLenh")).setExecutor(new me.qpneruy.timerplugin.Commands.ShowSchedCmd());
+        Objects.requireNonNull(getCommand("themLenh")).setExecutor(new me.qpneruy.timerplugin.Commands.AddSchedCmd());
+        Objects.requireNonNull(getCommand("xoaLenh")).setExecutor(new me.qpneruy.timerplugin.Commands.DeleteSchedCmd());
+        Objects.requireNonNull(getCommand("sualenh")).setExecutor(new me.qpneruy.timerplugin.Commands.EditSchedCmd());
+        Objects.requireNonNull(getCommand("timerpro")).setExecutor(new me.qpneruy.timerplugin.Commands.TimerProCmd());
     }
     private void loadTabcompleter() {
-        Objects.requireNonNull(getCommand("Them_lenh")).setTabCompleter(new me.qpneruy.timerplugin.Commands.TabCompleter.AddSchedCmd());
-        Objects.requireNonNull(getCommand("sua_lenh")).setTabCompleter(new me.qpneruy.timerplugin.Commands.TabCompleter.DeleteSchedCmd());
-        Objects.requireNonNull(getCommand("Xem_Lenh")).setTabCompleter(new me.qpneruy.timerplugin.Commands.TabCompleter.ShowSchedCmd());
-        Objects.requireNonNull(getCommand("Xoa_Lenh")).setTabCompleter(new me.qpneruy.timerplugin.Commands.TabCompleter.DeleteSchedCmd());
+        Objects.requireNonNull(getCommand("themlenh")).setTabCompleter(new me.qpneruy.timerplugin.Commands.TabCompleter.AddSchedCmd());
+        Objects.requireNonNull(getCommand("sualenh")).setTabCompleter(new me.qpneruy.timerplugin.Commands.TabCompleter.DeleteSchedCmd());
+//        Objects.requireNonNull(getCommand("Xem_Lenh")).setTabCompleter(new me.qpneruy.timerplugin.Commands.TabCompleter.ShowSchedCmd());
+        Objects.requireNonNull(getCommand("xoaLenh")).setTabCompleter(new me.qpneruy.timerplugin.Commands.TabCompleter.DeleteSchedCmd());
     }
     private void registerTask() {
         TaskManager tm = new TaskManager(this);

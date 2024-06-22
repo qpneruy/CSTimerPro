@@ -27,4 +27,10 @@ public class Utils {
         dayList.add("Chu_Nhat");
         return dayList;
     }
+
+    public static List<String> suggestions(String input, List<String> List) {
+        List<String> completions = new ArrayList<>();
+        for (String str : List) if (str.toLowerCase().startsWith(input.toLowerCase())) completions.add(str);
+        return completions;
+    }
 }

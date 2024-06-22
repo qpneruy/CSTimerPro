@@ -17,7 +17,7 @@ public class DeleteSchedCmd implements CommandExecutor {
             return false;
         }
         Player player = (Player) commandSender;
-        if (!player.hasPermission("TimerPro.XoaLenh")) {
+        if (!player.hasPermission("TimerPro.xoalenh")) {
             player.sendMessage("§6[TimerPro]: §cBạn không có quyền sử dụng lệnh này!");
         }
         if (strings.length < 2) {

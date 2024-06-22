@@ -1,7 +1,7 @@
 package me.qpneruy.timerplugin.serializer;
 
 import com.google.gson.*;
-import me.qpneruy.timerplugin.Task.ExecutionCmd;
+import me.qpneruy.timerplugin.Types.ExecutionCmd;
 
 import java.lang.reflect.Type;
 
@@ -21,9 +21,8 @@ public class ExecutionCmdDeserializer implements JsonDeserializer<ExecutionCmd> 
         if (jsonObject.has("eachMinutes")) {
             if (jsonObject.get("eachMinutes").getAsBoolean()) cmd.toggleEachMinute();
         }
-        if (jsonObject.has("isEnable")) {
-            if (jsonObject.get("isEnable").getAsBoolean()) cmd.toggleCommand();
-        }
+        if (jsonObject.get("isEnable").getAsBoolean() != cmd.isEnabled()) cmd.toggleCommand();
+
         return cmd;
     }
 }

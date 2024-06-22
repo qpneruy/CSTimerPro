@@ -4,7 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import me.qpneruy.timerplugin.Task.ExecutionCmd;
+import me.qpneruy.timerplugin.Types.ExecutionCmd;
 
 import java.lang.reflect.Type;
 
@@ -14,6 +14,7 @@ public class ExecutionCmdSerializer implements JsonSerializer<ExecutionCmd> {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("command", src.getCommand());
         jsonObject.addProperty("startTime", src.getStartTime());
+        jsonObject.addProperty("isEnable", src.isEnabled());
         if (!src.getStartTime().equals(src.getEndTime())) {
             jsonObject.addProperty("endTime", src.getEndTime());
         }
@@ -23,9 +24,8 @@ public class ExecutionCmdSerializer implements JsonSerializer<ExecutionCmd> {
         if (src.isEachMinute()) {
             jsonObject.addProperty("eachMinutes", src.isEachMinute());
         }
-        if (src.isEnabled()) {
-            jsonObject.addProperty("isEnable", src.isEnabled());
-        }
+
+
         return jsonObject;
     }
 }

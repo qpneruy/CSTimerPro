@@ -1,4 +1,4 @@
-package me.qpneruy.timerplugin.Task;
+package me.qpneruy.timerplugin.Types;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
